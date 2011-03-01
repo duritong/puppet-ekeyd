@@ -1,5 +1,6 @@
-class ekeyd::client {
-  if !$ekeyd_host { fail("\$ekeyd_host is not set for $fqdn") }
+class ekeyd::client(
+  $ekeyd_host
+) {
   case $operatingsystem {
     centos: { include ekeyd::client::centos }
     default: { include ekeyd::client::base }
