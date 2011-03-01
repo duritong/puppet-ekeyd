@@ -17,4 +17,8 @@ class ekeyd(
       include shorewall::rules::ekeyd
     }
   }
+
+  if $use_munin {
+    include ekeyd::munin
+  }
 }
