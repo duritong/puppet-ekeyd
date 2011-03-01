@@ -16,7 +16,7 @@ class ekeyd::base {
   }
 
   exec{'configure_ekey_key':
-    command => "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '{ print \$5}'` ${ekey_masterkey}",
+    command => "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '{ print \$5}'` ${ekeyd::ekey_masterkey}",
     unless => "ekeydctl list | grep -q 'Running OK'",
     require => Service['ekeyd'],
   } 
