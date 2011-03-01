@@ -11,6 +11,6 @@ class ekeyd::munin {
       'ekeyd_stat_KeyTemperatureC' ]:
       require => Munin::Plugin::Deploy['ekeyd_stat_'],
       ensure => 'ekeyd_stat_',
-      config => "'user root\nenv.controlsocket /var/run/ekeyd.sock",
+      config => "user root\nenv.controlsocket /var/run/ekeyd.sock",
   }
 }
