@@ -4,6 +4,7 @@ class ekeyd::client(
 ) {
   case $operatingsystem {
     centos: { include ekeyd::client::centos }
+    debian: { include ekeyd::client::debian }
     default: { include ekeyd::client::base }
   }
 
