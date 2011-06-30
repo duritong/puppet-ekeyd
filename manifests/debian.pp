@@ -1,4 +1,4 @@
-class ekeyd::host::debian inherits ekeyd::host::base {
+class ekeyd::debian inherits ekeyd::base {
   package { "usbutils": ensure => installed }
 
   if ( $virtual == "vserver" ) or ( $virtual == "xenu" ) {

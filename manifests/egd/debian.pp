@@ -1,4 +1,4 @@
-class egd::debian inherits ekeyd::egd {
+class ekeyd::egd::debian inherits ekeyd::egd {
   if ( $virtual == "vserver" ) {
     fail("This class shouldn't be included on vservers")
   }
