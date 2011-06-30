@@ -1,0 +1,5 @@
+# THIS FILE MANAGED BY PUPPET
+
+# Change to NO to prevent ekeyd starting on boot
+START_EKEYD=YES
+

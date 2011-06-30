@@ -4,6 +4,13 @@ class ekeyd::base {
     ensure => installed,
   }
 
+  # TODO (from riseup code)
+  # * eventually it would be cool if we could have two classes: one for 
+  # SetOutputToKernel and one for EGDTCPSocket. But for now we're just going
+  # to have puppet deliver the ekeyd.conf file.
+  # * ekeyd will be setup to feed output to whatever is configured in the
+  #   variables: $ekeyd_address and $ekeyd_port with the defaults being
+  #   127.0.0.1 and 8888
   file{'/etc/entropykey/ekeyd.conf':
     content => $operatingsystem ? {
       'debian' => template("ekeyd/ekeyd.conf_${lsbdistcodename}.erb"),
