@@ -5,7 +5,10 @@ class ekeyd::base {
   }
 
   file{'/etc/entropykey/ekeyd.conf':
-    source => 'puppet:///modules/ekeyd/ekeyd.conf',
+    content => $operatingsystem ? {
+      'debian' => template("ekeyd/ekeyd.conf_${lsbdistcodename}.erb"),
+       default => template("ekeyd/ekeyd.conf_default.erb"),
+    },
     require => Package['ekeyd'],
     notify => Service['ekeyd'],
     owner => root, group => 0, mode => 0644;
