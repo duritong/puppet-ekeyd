@@ -4,15 +4,20 @@ class ekeyd::base {
     ensure => installed,
   }
 
+  file{'/etc/entropykey/ekeyd.conf':
+    source => 'puppet:///modules/ekeyd/ekeyd.conf',
+    require => Package['ekeyd'],
+    notify => Service['ekeyd'],
+    owner => root, group => 0, mode => 0644;
+  }
   service{'ekeyd':
     ensure => running,
     enable => true,
-    require => Package['ekeyd'],
   }
 
-  exec{'configure_ekey_key':
-      command => "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '{ print \$5}'` ${ekey_masterkey}",
-      unless => "ekeydctl list | grep -q 'Running OK'",
-      require => Service['ekeyd'],
+  exec{'configure_ekeyd_key':
+    command => "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '{ print \$5}'` ${ekeyd::ekeyd_masterkey}",
+    unless => "ekeydctl list | grep -q 'Running OK'",
+    require => Service['ekeyd'],
   } 
 }
