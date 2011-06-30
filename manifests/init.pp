@@ -3,8 +3,6 @@ class ekeyd(
   $ekeyd_masterkey
 ){
 
-  package { "usbutils": ensure => installed }
- 
   if $ekeyd_key_present != 'true' { fail("Can't find an ekey key plugged into usb on ${fqdn}") }
 
   include ekeyd::base
@@ -12,6 +10,7 @@ class ekeyd(
   if $ekeyd_host {
     case $operatingsystem {
       centos: { include ekeyd::host::centos }
+      debian: { include ekeyd::host::debian }
       default: { include ekeyd::host::base }
     }
 
