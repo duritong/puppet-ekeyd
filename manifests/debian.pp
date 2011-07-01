@@ -14,7 +14,7 @@ class ekeyd::debian inherits ekeyd::base {
   }
 
   Service["ekeyd"] {
-    subscribe  => [ File["/etc/default/ekeyd"], File["/etc/entropykey/ekeyd.conf"] ];
+    subscribe  => [ File["/etc/default/ekeyd"], File["/etc/entropykey/ekeyd.conf"] ],
     pattern    => '/usr/sbin/ekeyd',
     hasrestart => true,
   }
