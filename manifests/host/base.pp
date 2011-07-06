@@ -5,6 +5,7 @@ class ekeyd::host::base inherits ekeyd::base {
 
   File['/etc/entropykey/ekeyd.conf']{
     source => 'puppet:///modules/ekeyd/ekeyd.conf.daemon',
+    content => undef,
   }
 
   Service['ekeyd']{
