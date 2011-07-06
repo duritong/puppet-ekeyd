@@ -18,7 +18,7 @@ class ekeyd::egd::debian inherits ekeyd::egd {
   }
 
   file { "/etc/default/ekeyd-egd-linux":
-    content => template("ekeyd/ekeyd-egd-linux.default"),
+    content => template("ekeyd/ekeyd-egd-linux.default.erb"),
     mode    => 644,
     owner   => root,
     group   => root,
