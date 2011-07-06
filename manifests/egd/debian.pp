@@ -14,7 +14,7 @@ class ekeyd::egd::debian inherits ekeyd::egd {
     ensure     => running,
     hasrestart => true,
     pattern    => '/usr/sbin/ekeyd-egd-linux',
-    subscribe  => File["/etc/default/ekeyd-egd-linux"];
+    subscribe  => File["/etc/default/ekeyd-egd-linux"],
   }
 
   file { "/etc/default/ekeyd-egd-linux":
