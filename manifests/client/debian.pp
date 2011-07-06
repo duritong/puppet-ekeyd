@@ -1,3 +1,3 @@
-class ekeyd::cliend::debian inherits ekeyd::cliend::base {
+class ekeyd::client::debian inherits ekeyd::client::base {
   include ekeyd::egd::debian
 }
