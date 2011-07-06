@@ -11,10 +11,10 @@ class ekeyd::egd::debian inherits ekeyd::egd {
   }
 
   Service["egd-linux"] {
-    ensure     => running,
-    hasrestart => true,
-    pattern    => '/usr/sbin/ekeyd-egd-linux',
-    subscribe  => File["/etc/default/ekeyd-egd-linux"],
+    name => 'ekeyd-egd-linux',
+    ensure => running,
+    hasstatus => true,
+    subscribe => File["/etc/default/ekeyd-egd-linux"],
   }
 
   file { "/etc/default/ekeyd-egd-linux":
