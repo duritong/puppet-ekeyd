@@ -5,7 +5,7 @@
 START_EKEYD_EGD_LINUX=YES
 
 # Change this if you want it to be something other than the default
-HOST=<%= has_variable?("ekeyd_address") ? ekeyd_address : '127.0.0.1' %>
+HOST=<%= has_variable?("ekeyd_host") ? ekeyd_host : '127.0.0.1' %>
 <%= has_variable?("ekeyd_port") ? 'PORT=' + ekeyd_port : '#PORT=8888' %>
 
 # Number of bits minimum in the pool, below which the daemon will kick in

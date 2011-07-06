@@ -4,7 +4,7 @@ class ekeyd-tunnel {
 
   # set the ekeyd bind address/port that the actual ekeyd will use and this
   # tunnel will connect to
-  $ekeyd_address = '127.0.0.1'
+  $ekeyd_host = '127.0.0.1'
   $ekeyd_port = '8889'
 
   # the ekeyd class ensures that we're not on a vserver or xen domU
@@ -37,7 +37,7 @@ class egd-tunnel {
 
   # set the ekeyd bind address that egd will connect to, which is stunnel on
   # localhost, then the tunnel will connect to the tunnel on the ekeyd server
-  $ekeyd_address = '127.0.0.1'
+  $ekeyd_host = '127.0.0.1'
 
   # the egd class ensures that we're not on a vserver, so we're either
   # on a vhost, a xen dom0, a xen domU, or a plain old machine, all of
