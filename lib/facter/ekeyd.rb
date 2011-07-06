@@ -1,5 +1,11 @@
 Facter.add('ekeyd_key_present') do
-  confine :kernel => %w{Linux}
+  setcode do
+    FileTest.exists?('/proc/bus/usb/devices') && \
+      !(File.read('/proc/bus/usb/devices') =~ /Product=Entropy Key/).nil?
+  end
+end
+Facter.add('ekeyd_key_present') do
+  confine :operatingsystem => %w{Debian}
   setcode do
     !`lsusb | grep "Entropy Key"`.empty?
   end
