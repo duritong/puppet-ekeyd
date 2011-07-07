@@ -1,17 +1,10 @@
 class ekeyd::egd {
-  package{'ekeyd-egd-linux':
-    ensure => present,
-    before => Service['egd-linux'],
+  if ( $virtual == "vserver" ) {
+    fail("This class shouldn't be included on vservers")
   }
 
-  service{'egd-linux':
-    enable => true,
-    ensure => running,
-  }
-
-  if $use_shorewall {
-    Service['egd-linux']{
-      require => Service['shorewall'],
-    }
+  case $operatingsystem {
+    debian: { include ekeyd::egd::debian }
+    default: { include ekeyd::egd::base }
   }
 }

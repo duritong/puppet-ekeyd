@@ -1,7 +1,4 @@
-class ekeyd::egd::debian inherits ekeyd::egd {
-  if ( $virtual == "vserver" ) {
-    fail("This class shouldn't be included on vservers")
-  }
+class ekeyd::egd::debian inherits ekeyd::egd::base {
 
   Package["ekeyd-egd-linux"] {
     ensure => $lsbdistcodename ? {
@@ -12,7 +9,6 @@ class ekeyd::egd::debian inherits ekeyd::egd {
 
   Service["egd-linux"] {
     name => 'ekeyd-egd-linux',
-    ensure => running,
     hasstatus => true,
     subscribe => File["/etc/default/ekeyd-egd-linux"],
   }
