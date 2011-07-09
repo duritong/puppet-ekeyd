@@ -14,7 +14,7 @@ class ekeyd::base {
   file{'/etc/entropykey/ekeyd.conf':
     content => $operatingsystem ? {
       'debian' => template("ekeyd/ekeyd.conf_${lsbdistcodename}.erb"),
-       default => template("ekeyd/ekeyd_default.conf.erb"),
+       default => template("ekeyd/ekeyd.conf_default.erb"),
     },
     require => Package['ekeyd'],
     notify => Service['ekeyd'],
