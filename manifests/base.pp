@@ -5,15 +5,15 @@ class ekeyd::base {
   }
 
   # TODO (from riseup code)
-  # * eventually it would be cool if we could have two classes: one for 
+  # * eventually it would be cool if we could have two classes: one for
   # SetOutputToKernel and one for EGDTCPSocket. But for now we're just going
   # to have puppet deliver the ekeyd.conf file.
   # * ekeyd will be setup to feed output to whatever is configured in the
   #   variables: $ekeyd_host and $ekeyd_port with the defaults being
   #   127.0.0.1 and 8888
   file{'/etc/entropykey/ekeyd.conf':
-    content => $operatingsystem ? {
-      'debian' => template("ekeyd/ekeyd.conf_${lsbdistcodename}.erb"),
+    content => $::operatingsystem ? {
+      'debian' => template("ekeyd/ekeyd.conf_${::lsbdistcodename}.erb"),
        default => template("ekeyd/ekeyd.conf_default.erb"),
     },
     require => Package['ekeyd'],
@@ -26,8 +26,8 @@ class ekeyd::base {
   }
 
   exec{'configure_ekeyd_key':
-    command => "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '{ print \$5}'` ${ekeyd::ekeyd_masterkey}",
+    command => "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '{ print \$5}'` ${ekeyd::masterkey}",
     unless => "ekeydctl list | grep -q 'Running OK'",
     require => Service['ekeyd'],
-  } 
+  }
 }

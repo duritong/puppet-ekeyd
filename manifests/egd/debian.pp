@@ -1,7 +1,7 @@
 class ekeyd::egd::debian inherits ekeyd::egd::base {
 
   Package["ekeyd-egd-linux"] {
-    ensure => $lsbdistcodename ? {
+    ensure => $::lsbdistcodename ? {
       "lenny" => "1.1.3-3~bpo50+1",
       default => 'installed'
     }

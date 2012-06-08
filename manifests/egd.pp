@@ -1,9 +1,9 @@
 class ekeyd::egd {
-  if ( $virtual == "vserver" ) {
+  if ( $::virtual == "vserver" ) {
     fail("This class shouldn't be included on vservers")
   }
 
-  case $operatingsystem {
+  case $::operatingsystem {
     debian: { include ekeyd::egd::debian }
     default: { include ekeyd::egd::base }
   }

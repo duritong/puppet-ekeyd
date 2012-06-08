@@ -9,7 +9,7 @@ class ekeyd::egd::base {
     ensure => running,
   }
 
-  if $use_shorewall {
+  if hiera('use_shorewall',false) {
     Service['egd-linux']{
       require => Service['shorewall'],
     }
