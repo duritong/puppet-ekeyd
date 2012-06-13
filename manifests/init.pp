@@ -1,6 +1,8 @@
 class ekeyd(
   $host = false,
-  $masterkey
+  $masterkey,
+  $manage_munin     = false,
+  $manage_shorewall = false
 ){
 
   if $::ekeyd_key_present != 'true' { fail("Can't find an ekey key plugged into usb on ${::fqdn}") }
@@ -16,12 +18,12 @@ class ekeyd(
       default: { include ekeyd::host::base }
     }
 
-    if hiera('use_shorewall',false) {
+    if $ekeyed::manage_shorewall {
       include shorewall::rules::ekeyd
     }
   }
 
-  if hiera('use_munin',false) {
+  if $ekeyed::manage_munin {
     include ekeyd::munin
   }
 }
