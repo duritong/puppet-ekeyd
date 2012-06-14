@@ -18,12 +18,12 @@ class ekeyd(
       default: { include ekeyd::host::base }
     }
 
-    if $ekeyed::manage_shorewall {
+    if $ekeyd::manage_shorewall {
       include shorewall::rules::ekeyd
     }
   }
 
-  if $ekeyed::manage_munin {
+  if $ekeyd::manage_munin {
     include ekeyd::munin
   }
 }

@@ -1,4 +1,6 @@
-class ekeyd::egd {
+class ekeyd::egd ( 
+  $manage_shorewall = false
+) {
   if ( $::virtual == "vserver" ) {
     fail("This class shouldn't be included on vservers")
   }

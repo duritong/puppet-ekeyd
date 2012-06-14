@@ -12,5 +12,7 @@ class ekeyd::host::base inherits ekeyd::base {
     before => Service['egd-linux'],
   }
 
-  include ekeyd::egd
+  class { 'ekeyd::egd' :
+    manage_shorewall => $ekeyd::manage_shorewall
+  }
 }
