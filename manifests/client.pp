@@ -1,7 +1,7 @@
 class ekeyd::client(
   $host,
   $shorewall_zones = ['net'],
-  $manage_shorewall
+  $manage_shorewall = false
 ) {
   case $::operatingsystem {
     centos: { include ekeyd::client::centos }
