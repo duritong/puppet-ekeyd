@@ -1,5 +1,6 @@
 class ekeyd::client(
   $host,
+  $port = '8888',
   $shorewall_zones = ['net'],
   $manage_shorewall = false
 ) {
