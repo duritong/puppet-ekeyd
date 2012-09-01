@@ -2,13 +2,18 @@ class ekeyd(
   $host = false,
   $masterkey,
   $manage_munin     = false,
-  $manage_shorewall = false
+  $manage_shorewall = false,
+  $mode = $operatingsystem ? {
+    centos => 'uds',
+    default => 'direct'
+  }
 ){
 
   if $::ekeyd_key_present != 'true' { fail("Can't find an ekey key plugged into usb on ${::fqdn}") }
 
   case $::operatingsystem {
     debian: { include ekeyd::debian }
+    centos: { include ekeyd::centos }
     default: { include ekeyd::base }
   }
 

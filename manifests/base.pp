@@ -3,6 +3,15 @@ class ekeyd::base {
   package{'ekeyd':
     ensure => installed,
   }
+  if $ekeyd::mode == 'uds' {
+    $rekey_cmd = "ekey-rekey `ekeydctl list | grep \"/var/run/entropykeys\" | awk -F, '{ print $5}'` ${ekeyd::masterkey}"
+    package{'ekeyd-uds':
+      ensure => installed,
+      before => Package['ekeyd'],
+    }
+  } else {
+    $rekey_cmd = "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '    { print \$5}'` ${ekeyd::masterkey}"
+  }
 
   # TODO (from riseup code)
   # * eventually it would be cool if we could have two classes: one for
@@ -26,7 +35,7 @@ class ekeyd::base {
   }
 
   exec{'configure_ekeyd_key':
-    command => "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '{ print \$5}'` ${ekeyd::masterkey}",
+    command => $rekey_cmd,
     unless => "ekeydctl list | grep -q 'Running OK'",
     require => Service['ekeyd'],
   }
