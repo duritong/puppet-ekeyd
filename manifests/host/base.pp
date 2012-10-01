@@ -13,6 +13,7 @@ class ekeyd::host::base inherits ekeyd::base {
   }
 
   class { 'ekeyd::egd' :
-    manage_shorewall => $ekeyd::manage_shorewall
+    manage_shorewall => $ekeyd::manage_shorewall,
+    manage_monit => $ekeyd::manage_monit
   }
 }

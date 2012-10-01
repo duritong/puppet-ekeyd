@@ -3,10 +3,11 @@ class ekeyd(
   $masterkey,
   $manage_munin     = false,
   $manage_shorewall = false,
-  $mode = $operatingsystem ? {
+  $mode = $::operatingsystem ? {
     centos => 'uds',
     default => 'direct'
-  }
+  },
+  $manage_monit     = true
 ){
 
   if $::ekeyd_key_present != 'true' { fail("Can't find an ekey key plugged into usb on ${::fqdn}") }
@@ -30,5 +31,9 @@ class ekeyd(
 
   if $ekeyd::manage_munin {
     include ekeyd::munin
+  }
+  
+  if $ekeyd::manage_monit {
+    include ekeyd::monit
   }
 }
