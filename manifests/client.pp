@@ -1,8 +1,9 @@
 class ekeyd::client(
   $host,
-  $port = '8888',
-  $shorewall_zones = ['net'],
-  $manage_shorewall = false
+  $port             = '8888',
+  $shorewall_zones  = ['net'],
+  $manage_shorewall = false,
+  $manage_monit     = false
 ) {
   case $::operatingsystem {
     centos: { include ekeyd::client::centos }
