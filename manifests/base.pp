@@ -5,7 +5,7 @@ class ekeyd::base {
     ensure => installed,
   }
   if $ekeyd::mode == 'uds' {
-    $rekey_cmd = "ekey-rekey `ekeydctl list | grep \"/var/run/entropykeys\" | awk -F, '{ print \$5 }'` ${ekeyd::masterkey}"
+    $rekey_cmd = "ekey-rekey `ekeydctl list | grep \"/var/run/entropykeys\" | awk -F/ '{ print \$4 }'` ${ekeyd::masterkey}"
     package{'ekeyd-uds':
       ensure => installed,
       before => Package['ekeyd'],
