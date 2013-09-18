@@ -14,7 +14,7 @@ class ekeyd(
   $manage_monit     = true
 ){
 
-  if str2bool($::ekeyd_key_present) { fail("Can't find an ekey key plugged into usb on ${::fqdn}") }
+  if !str2bool($::ekeyd_key_present) { fail("Can't find an ekey key plugged into usb on ${::fqdn}") }
 
   case $::operatingsystem {
     debian:   { include ekeyd::debian }
