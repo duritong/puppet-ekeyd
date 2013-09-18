@@ -1,16 +1,17 @@
+# manage base stuff
 class ekeyd::base {
 
   package{'ekeyd':
     ensure => installed,
   }
   if $ekeyd::mode == 'uds' {
-    $rekey_cmd = "ekey-rekey `ekeydctl list | grep \"/var/run/entropykeys\" | awk -F, '{ print $5}'` ${ekeyd::masterkey}"
+    $rekey_cmd = "ekey-rekey `ekeydctl list | grep \"/var/run/entropykeys\" | awk -F, '{ print \$5 }'` ${ekeyd::masterkey}"
     package{'ekeyd-uds':
       ensure => installed,
       before => Package['ekeyd'],
     }
   } else {
-    $rekey_cmd = "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '    { print \$5}'` ${ekeyd::masterkey}"
+    $rekey_cmd = "ekey-rekey `ekeydctl list | grep \"/dev/entropykey\" | awk -F, '{ print \$5 }'` ${ekeyd::masterkey}"
   }
 
   # TODO (from riseup code)
@@ -20,14 +21,17 @@ class ekeyd::base {
   # * ekeyd will be setup to feed output to whatever is configured in the
   #   variables: $ekeyd_host and $ekeyd_port with the defaults being
   #   127.0.0.1 and 8888
+  $conf_content = $::operatingsystem ? {
+    'debian' => template("ekeyd/ekeyd.conf_${::lsbdistcodename}.erb"),
+    default => template('ekeyd/ekeyd.conf_default.erb'),
+  }
   file{'/etc/entropykey/ekeyd.conf':
-    content => $::operatingsystem ? {
-      'debian' => template("ekeyd/ekeyd.conf_${::lsbdistcodename}.erb"),
-       default => template("ekeyd/ekeyd.conf_default.erb"),
-    },
+    content => $conf_content,
     require => Package['ekeyd'],
-    notify => Service['ekeyd'],
-    owner => root, group => 0, mode => 0644;
+    notify  => Service['ekeyd'],
+    owner   => root,
+    group   => 0,
+    mode    => '0644';
   }
   service{'ekeyd':
     ensure => running,
@@ -36,7 +40,7 @@ class ekeyd::base {
 
   exec{'configure_ekeyd_key':
     command => $rekey_cmd,
-    unless => "ekeydctl list | grep -q 'Running OK'",
+    unless  => 'ekeydctl list | grep -q \'Running OK\'',
     require => Service['ekeyd'],
   }
 }
