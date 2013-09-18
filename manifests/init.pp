@@ -5,7 +5,7 @@ class ekeyd(
   $manage_munin     = false,
   $manage_shorewall = false,
   $mode             = $::operatingsystem ? {
-    centos => $::operatingsystemmajrelease {
+    centos => $::operatingsystemmajrelease ? {
       '5'     => 'uds',
       default => 'direct',
     },
