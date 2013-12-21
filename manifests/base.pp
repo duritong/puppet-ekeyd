@@ -39,8 +39,8 @@ class ekeyd::base {
   }
 
   exec{'configure_ekeyd_key':
-    command => $rekey_cmd,
+    command => "service ekeyd stop; ${rekey_cmd}",
     unless  => 'ekeydctl list | grep -q \'Running OK\'',
-    require => Service['ekeyd'],
+    before  => Service['ekeyd'],
   }
 }
