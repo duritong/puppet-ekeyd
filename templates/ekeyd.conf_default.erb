@@ -12,9 +12,9 @@
 
 -- The unix control socket is typically what we use
 <% if scope['ekeyd::params::use_systemd'] -%>
-UnixControlSocket "/var/run/ekeyd.sock"
-<% else -%>
 UnixControlSocket "/run/ekeyd.sock"
+<% else -%>
+UnixControlSocket "/var/run/ekeyd.sock"
 <% end -%>
 
 -- The keyring contains the keys for the long-term rekey If you change
