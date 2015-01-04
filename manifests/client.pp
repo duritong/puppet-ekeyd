@@ -5,6 +5,7 @@ class ekeyd::client(
   $manage_shorewall = false,
   $manage_monit     = false
 ) {
+  include ekeyd::params
   case $::operatingsystem {
     centos: { include ekeyd::client::centos }
     default: { include ekeyd::client::base }

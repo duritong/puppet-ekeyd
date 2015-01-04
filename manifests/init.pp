@@ -14,7 +14,9 @@ class ekeyd(
   $manage_monit     = true
 ){
 
-  if !str2bool($::ekeyd_key_present) { fail("Can't find an ekey key plugged into usb on ${::fqdn}") }
+  if !$::ekeyd_key { fail("Can't find an ekey key plugged in on ${::fqdn}") }
+
+  include ekeyd::params
 
   case $::operatingsystem {
     debian:   { include ekeyd::debian }
@@ -23,13 +25,12 @@ class ekeyd(
   }
 
   if $ekeyd::host {
-    case $::operatingsystem {
-      centos:   { include ekeyd::host::centos }
-      default:  { include ekeyd::host::base }
-    }
-
     if $ekeyd::manage_shorewall {
       include shorewall::rules::ekeyd
+    }
+    class { 'ekeyd::egd' :
+      manage_shorewall => $ekeyd::manage_shorewall,
+      manage_monit     => $ekeyd::manage_monit
     }
   }
 
@@ -37,7 +38,7 @@ class ekeyd(
     include ekeyd::munin
   }
 
-  if $ekeyd::manage_monit {
+  if $ekeyd::manage_monit and !$ekeyd::params::use_systemd {
     include ekeyd::monit
   }
 }

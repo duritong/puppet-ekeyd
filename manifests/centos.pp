@@ -10,4 +10,10 @@ class ekeyd::centos inherits ekeyd::base {
       ensure => $ensure,
     }
   }
+  if $ekeyd::host and !$ekeyd::params::use_systemd {
+    file{'/etc/sysconfig/egd-linux':
+      ensure => 'absent',
+      notify => Service['egd-linux'],
+    }
+  }
 }
