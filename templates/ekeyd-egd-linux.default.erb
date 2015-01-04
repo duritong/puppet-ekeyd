@@ -5,8 +5,8 @@
 START_EKEYD_EGD_LINUX=YES
 
 # Change this if you want it to be something other than the default
-HOST=<%= scope.lookupvar('ekeyd::client::host') %>
-<% if (port=scope.lookupvar('ekeyd::client::port')) != '8888' -%>
+HOST=<%= scope['ekeyd::egd::host'] %>
+<% if (port=scope['ekeyd::egd::port']) != '8888' -%>
 PORT=<%= port %>
 <% else -%>
 #PORT=8888
