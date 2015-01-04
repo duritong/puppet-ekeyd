@@ -25,7 +25,7 @@ class ekeyd::base {
   }
 
   exec{'configure_ekeyd_key':
-    command => "ekey-rekey ${::ekeyd_key} ${ekeyd::masterkey}",
+    command => "ekey-rekey \$(ekeydctl list | grep ',/dev' | awk -F, '{ print \$5 }') ${ekeyd::masterkey}",
     unless  => 'ekeydctl list | grep -q \'Running OK\'',
     require => Service['ekeyd'],
   }
