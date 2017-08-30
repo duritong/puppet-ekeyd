@@ -5,7 +5,7 @@ class ekeyd(
   $manage_munin     = false,
   $manage_shorewall = false,
   $mode             = $::operatingsystem ? {
-    centos => $::operatingsystemmajrelease ? {
+    'CentOS' => $::operatingsystemmajrelease ? {
       '5'     => 'uds',
       default => 'direct',
     },
@@ -19,9 +19,9 @@ class ekeyd(
   include ekeyd::params
 
   case $::operatingsystem {
-    debian:   { include ekeyd::debian }
-    centos:   { include ekeyd::centos }
-    default:  { include ekeyd::base }
+    'Debian': { include ekeyd::debian }
+    'CentOS': { include ekeyd::centos }
+    default: { include ekeyd::base }
   }
 
   if $ekeyd::host {
@@ -31,7 +31,7 @@ class ekeyd(
     class { 'ekeyd::egd' :
       host             => '127.0.0.1',
       manage_shorewall => $ekeyd::manage_shorewall,
-      manage_monit     => $ekeyd::manage_monit
+      manage_monit     => $ekeyd::manage_monit,
     }
   }
 

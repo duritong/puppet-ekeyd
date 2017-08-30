@@ -18,8 +18,8 @@ class ekeyd::egd (
   }
 
   case $::operatingsystem {
-    debian: { include ekeyd::egd::debian }
-    centos: { include ekeyd::egd::centos }
+    'Debian': { include ekeyd::egd::debian }
+    'CentOS': { include ekeyd::egd::centos }
     default: { include ekeyd::egd::base }
   }
 
