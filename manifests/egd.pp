@@ -11,7 +11,7 @@ class ekeyd::egd (
   }
 
   include ekeyd::params
-  if $manage_shorewall and $host {
+  if $manage_shorewall and $host and $host != '127.0.0.1' {
     shorewall::rules::out::ekeyd{$shorewall_zones:
       host => $host,
     }

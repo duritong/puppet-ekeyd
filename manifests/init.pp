@@ -29,6 +29,7 @@ class ekeyd(
       include shorewall::rules::ekeyd
     }
     class { 'ekeyd::egd' :
+      host             => '127.0.0.1',
       manage_shorewall => $ekeyd::manage_shorewall,
       manage_monit     => $ekeyd::manage_monit
     }
